@@ -1,0 +1,31 @@
+# NOTICE
+
+This project bundles and builds upon two upstream open-source projects.
+
+## Agent Autoloop (the hub this plugin drives)
+
+- Project:  Agent Autoloop
+- Author:   数字生命卡兹克
+- Upstream:  https://github.com/KKKKhazix/agent-autoloop
+- License:   MIT
+
+`dsh-autoloop` is a DeepSeek Harness (dsh) client for an Agent Autoloop hub.
+It is **not** a fork of Agent Autoloop and does not redistribute its source
+code. It talks to a separately installed hub over that project's public
+HTTP + JSON protocol, and it only reads that project's `config.json` and
+`rules.json` in the documented layout.
+
+## DeepSeek Harness (dsh)
+
+- Project:  DeepSeek Harness
+- Upstream:  https://github.com/deepseek-ai/deepseek-harness
+- License:   see the upstream repository
+
+`dsh-autoloop` is a third-party plugin for dsh and is not affiliated with
+or endorsed by the DeepSeek Harness project.
+
+## What this repository adds
+
+The plugin itself — the host-side route table, the rule-file bridge, the
+privileged action driver, and the panel UI — is original work by
+Minggnim-jpg and is released under the MIT license in `LICENSE`.
