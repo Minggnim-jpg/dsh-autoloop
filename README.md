@@ -119,6 +119,18 @@ node scripts/dev-harness.mjs 3999   # 把宿主路由挂到临时端口，用 cu
 - 深色跟随 dsh 的 `body[data-ds-dark-theme]`，不新增独立主题状态。
 - 支持 `prefers-reduced-motion`。
 
+## 插件市场
+
+本仓库提供了一个符合 **Plugin market index format 1** 的索引文件：
+
+```
+https://raw.githubusercontent.com/Minggnim-jpg/dsh-autoloop/main/market/index.json
+```
+
+在 dsh 里启用「自定义插件索引」后填入上面的地址即可浏览和安装。
+
+索引格式由 `@deepseek-ai/dsh-plugin-market-index` 定义：`format: 1`，每个版本必须带 `source`——npm 包名，或 git 仓库加一个钉死的 40 位 commit。`title` 和 `description` 是多语言对象且必须含 `en`。
+
 ## 许可
 
 MIT。本插件本体是 Minggnim-jpg 的作品；对接的 Agent Autoloop 归数字生命卡兹克所有，同 MIT 许可。详见 [LICENSE](./LICENSE) 和 [NOTICE](./NOTICE)。

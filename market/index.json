@@ -1,0 +1,106 @@
+{
+  "format": 1,
+  "title": {
+    "zh": "Minggnim 的 dsh 插件",
+    "en": "Minggnim's dsh plugins"
+  },
+  "description": {
+    "zh": "为 DeepSeek Harness 做的第三方插件。",
+    "en": "Third-party plugins for DeepSeek Harness."
+  },
+  "metadata": {
+    "categories": {
+      "automation": {
+        "title": {
+          "zh": "自动化",
+          "en": "Automation"
+        }
+      },
+      "productivity": {
+        "title": {
+          "zh": "效率",
+          "en": "Productivity"
+        }
+      }
+    },
+    "labels": {
+      "agent": {
+        "title": {
+          "zh": "智能体",
+          "en": "Agent"
+        }
+      },
+      "self-hosted": {
+        "title": {
+          "zh": "本机运行",
+          "en": "Self-hosted"
+        }
+      },
+      "human-in-the-loop": {
+        "title": {
+          "zh": "人工确认",
+          "en": "Human-in-the-loop"
+        }
+      }
+    },
+    "sortKeys": {
+      "stars": {
+        "title": {
+          "zh": "收藏",
+          "en": "Stars"
+        },
+        "order": "desc"
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-autoloop",
+      "title": {
+        "zh": "Agent Autoloop 面板",
+        "en": "Agent Autoloop Panel"
+      },
+      "description": {
+        "zh": "在 dsh 侧栏里看与管本机的 Agent Autoloop 中台：处理等你决定的卡片、翻执行记录、改自动任务规则、管理本机中台。",
+        "en": "Watch and drive a local Agent Autoloop hub from the dsh sidebar: answer cards waiting on you, browse run history, edit scheduled rules and manage the hub."
+      },
+      "author": "Minggnim-jpg",
+      "homepage": "https://github.com/Minggnim-jpg/dsh-autoloop#readme",
+      "repository": {
+        "url": "https://github.com/Minggnim-jpg/dsh-autoloop"
+      },
+      "metadata": {
+        "category": "automation",
+        "keywords": [
+          "deepseek-harness",
+          "dsh-plugin",
+          "agent-autoloop",
+          "automation",
+          "human-in-the-loop"
+        ],
+        "labels": [
+          "agent",
+          "self-hosted",
+          "human-in-the-loop"
+        ],
+        "sortKeys": {
+          "stars": 0
+        }
+      },
+      "versions": [
+        {
+          "version": "0.2.1",
+          "publishTimestamp": 1794302383,
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 || 0.2.2-rc.1"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Minggnim-jpg/dsh-autoloop",
+            "commit": "7c05cab3d0c6730df184135631fbb4049750d3a8"
+          }
+        }
+      ]
+    }
+  ]
+}
