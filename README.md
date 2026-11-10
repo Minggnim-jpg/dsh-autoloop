@@ -119,6 +119,23 @@ node scripts/dev-harness.mjs 3999   # 把宿主路由挂到临时端口，用 cu
 - 深色跟随 dsh 的 `body[data-ds-dark-theme]`，不新增独立主题状态。
 - 支持 `prefers-reduced-motion`。
 
+## 发版
+
+```bash
+npm run release -- 0.3.0          # 改版本、写入索引、提示后续步骤
+npm run release -- 0.3.0 --dry-run  # 只看会改什么
+
+# 按提示填 CHANGELOG、构建、测试、提交并打 tag
+git push origin main && git push origin v0.3.0
+
+npm run release -- --pin 0.3.0    # 把索引里的 commit 补成真实 SHA
+git add market/index.json && git commit -m "release: pin v0.3.0" && git push
+```
+
+`--pin` 是单独一步，因为索引需要的是**这次发布自己的 commit**，而提交索引这个动作才会产生它。`--pin` 之前索引里的 `commit` 是空的——空的装不上，好过填一个假的让人以为能装。
+
+脚本会用 dsh 自带的校验器（`@deepseek-ai/dsh-plugin-market-index`）验证索引格式。找不到校验器时会跳过并提示，可用 `DSH_MARKET_INDEX_VALIDATOR` 指定路径。
+
 ## 插件市场
 
 本仓库提供了一个符合 **Plugin market index format 1** 的索引文件：
