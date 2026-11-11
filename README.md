@@ -29,8 +29,6 @@
 |---|---|
 | ![执行记录](./docs/images/runs.png) | ![系统管理](./docs/images/admin.png) |
 
-> 截图待补：请把运行时截图放到 `docs/images/`，文件名与上表一致。
-
 ## 功能
 
 | 页面 | 内容 |
