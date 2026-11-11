@@ -152,6 +152,12 @@ body[data-ds-dark-theme] .alo-root .alo-section-title { color: var(--alo-desk-in
 .alo-mono { font-family: var(--alo-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
 .alo-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
+/* A card body keeps the agent's line breaks and turns its bare URLs into links. */
+.alo-richtext { white-space: pre-wrap; word-break: break-word; }
+.alo-link { color: var(--alo-accent); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.alo-link:hover { text-decoration-thickness: 2px; }
+.alo-link:focus-visible { outline: 2px solid var(--alo-accent); outline-offset: 2px; border-radius: 2px; }
+
 .alo-table { width: 100%; border-collapse: collapse; }
 .alo-table th, .alo-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--alo-line); vertical-align: middle; }
 .alo-table th { color: var(--alo-muted); font-weight: 500; font-size: 12px; white-space: nowrap; }

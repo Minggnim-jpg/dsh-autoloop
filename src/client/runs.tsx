@@ -11,7 +11,7 @@ import { createElement, useEffect, useState, type ReactNode } from 'react'
 import type { AgentRow, HubState, Run, RunDetail } from '../types.js'
 import { api, ApiError } from './api.js'
 import { duration, firstLine, fullTime, shortTime, usageLine } from './format.js'
-import { Empty, Failure, RunBadge } from './ui.js'
+import { Empty, ExternalLink, Failure, RunBadge } from './ui.js'
 
 /** Props: the loaded runs and who they belong to. */
 export interface RunsProps {
@@ -233,7 +233,7 @@ function RunDetailView({ id, onBack, onChanged }: { id: number; onBack: () => vo
                   ),
                 )
               : null,
-            run.link !== '' ? createElement('a', { href: run.link, target: '_blank', rel: 'noreferrer', className: 'alo-small' }, '打开关联链接') : null,
+            run.link !== '' ? createElement(ExternalLink, { href: run.link, className: 'alo-small' }, '打开关联链接') : null,
             createElement(
               'details',
               { style: { marginTop: 10 } },

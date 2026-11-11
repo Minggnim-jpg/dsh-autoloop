@@ -12,7 +12,7 @@ import { createElement, useEffect, useState, type ReactNode } from 'react'
 import type { Card } from '../types.js'
 import { api, ApiError, answerOptions, isQuestion } from './api.js'
 import { cardStateText, shortTime } from './format.js'
-import { Empty, Section } from './ui.js'
+import { Empty, ExternalLink, RichText, Section } from './ui.js'
 
 /** Props: the open and recent cards, plus a way to reload after an action. */
 export interface InboxProps {
@@ -136,7 +136,16 @@ function CardDetail({ card, onChanged }: { card: Card; onChanged: () => void }):
       { className: 'alo-small alo-muted', style: { marginBottom: 10 } },
       `${card.kind === 'ask' ? '等你决定' : '要你留意'}${card.run ? ` · 第 ${card.run} 轮` : ''}${card.rule ? ` · ${card.rule}` : ''} · ${shortTime(card.createdAt)}`,
     ),
-    createElement('pre', { style: { whiteSpace: 'pre-wrap', fontFamily: 'inherit', margin: '0 0 12px' } }, card.text),
+    // The body is prose, but consoles and drafts arrive as bare URLs: keep the
+    // words as written and make the URLs open the owner's browser in one click.
+    createElement(RichText, { text: card.text, style: { marginBottom: 12 } }),
+    card.link !== null && card.link !== ''
+      ? createElement(
+          'div',
+          { style: { marginBottom: 12 } },
+          createElement(ExternalLink, { href: card.link, className: 'alo-small' }, '打开关联链接'),
+        )
+      : null,
 
     isOpen
       ? createElement(

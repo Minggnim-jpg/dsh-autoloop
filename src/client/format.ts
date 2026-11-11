@@ -114,3 +114,83 @@ export function shortHash(value: string | null, length = 8): string {
 export function weekday(date: Date): string {
   return ['日', '一', '二', '三', '四', '五', '六'][date.getDay()] ?? ''
 }
+
+/** One piece of a card's text: either prose, or a link that can be opened. */
+export interface TextPiece {
+  kind: 'text' | 'link'
+  value: string
+  /** The absolute URL to open; only set for `link` pieces. */
+  href?: string
+}
+
+/**
+ * Matches an absolute URL in running text.
+ *
+ * Cards routinely carry a bare URL straight from an agent ("选品台：http://…"),
+ * and that URL ends at whitespace, at a CJK character, or at a piece of
+ * punctuation a writer puts *around* a link. Latin punctuation that can legally
+ * appear in a URL is kept here and judged by {@link trimUrl} afterwards, because
+ * only the tail tells a URL's own punctuation from the sentence's.
+ */
+const URL_PATTERN = /(?:https?:\/\/|www\.)[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]+/gi
+
+/**
+ * Punctuation that ends a sentence rather than a URL.
+ *
+ * Brackets are deliberately absent: they may legitimately sit inside a URL, so
+ * {@link trimUrl} decides them against the URL's own bracket balance instead.
+ */
+const TRAILING = /[.,;:!?、，。；：！？"'’”]+$/
+
+/**
+ * Trim the characters of a match that belong to the sentence, not the URL.
+ *
+ * Two rules, applied until neither fires: trailing sentence punctuation is
+ * always dropped, and a trailing closing bracket is dropped when it closes more
+ * brackets than the URL opened — so `(见 http://a/b)` yields `http://a/b`, while
+ * `http://a/b_(c)` keeps its final `)`. Chinese brackets are never part of a
+ * URL, so they are dropped outright.
+ */
+function trimUrl(raw: string): string {
+  let url = raw.replace(/[》」』】]+$/, '').replace(TRAILING, '')
+  const pairs: [string, string][] = [
+    ['(', ')'],
+    ['[', ']'],
+  ]
+  for (let changed = true; changed; ) {
+    changed = false
+    const before = url
+    url = url.replace(TRAILING, '')
+    for (const [open, close] of pairs) {
+      while (url.endsWith(close) && (url.match(new RegExp(`\\${open}`, 'g'))?.length ?? 0) < (url.match(new RegExp(`\\${close}`, 'g'))?.length ?? 0)) {
+        url = url.slice(0, -1)
+      }
+    }
+    changed = url !== before
+  }
+  return url
+}
+
+/**
+ * Split text into prose and links without losing a character.
+ *
+ * Rejoining `pieces.map(piece => piece.value)` always yields the input exactly,
+ * so the panel can show the same words the agent wrote — only some of them now
+ * open a browser.
+ */
+export function splitLinks(text: string): TextPiece[] {
+  const pieces: TextPiece[] = []
+  if (text === '') return pieces
+  let last = 0
+  URL_PATTERN.lastIndex = 0
+  for (let match = URL_PATTERN.exec(text); match !== null; match = URL_PATTERN.exec(text)) {
+    const url = trimUrl(match[0])
+    if (url === '' || /^https?:\/\/$/i.test(url) || /^www\.$/i.test(url)) continue
+    if (match.index > last) pieces.push({ kind: 'text', value: text.slice(last, match.index) })
+    const href = /^https?:\/\//i.test(url) ? url : `https://${url}`
+    pieces.push({ kind: 'link', value: url, href })
+    last = match.index + url.length
+  }
+  if (last < text.length) pieces.push({ kind: 'text', value: text.slice(last) })
+  return pieces
+}

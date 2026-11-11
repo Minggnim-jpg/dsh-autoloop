@@ -6,9 +6,9 @@
  * @module dsh-autoloop/client/ui
  */
 
-import { createElement, type ReactNode } from 'react'
+import { createElement, type MouseEvent, type ReactNode } from 'react'
 import type { Run } from '../types.js'
-import { runStateText } from './format.js'
+import { runStateText, splitLinks } from './format.js'
 
 /** One headline number with its explanation. */
 export function Stat({ label, value, note }: { label: string; value: ReactNode; note?: ReactNode }): ReactNode {
@@ -94,6 +94,70 @@ export function Failure({ message, retry }: { message: string; retry?: () => voi
     retry !== undefined
       ? createElement('button', { className: 'alo-btn', style: { marginTop: 10 }, onClick: retry }, '重试')
       : null,
+  )
+}
+
+/**
+ * Open a URL in the machine's own browser, leaving the panel where it is.
+ *
+ * The panel lives inside dsh's web shell, whose navigation guard would either
+ * swallow a plain link click or navigate the shell away from the session. A
+ * new top-level window with an opener-less feature string hands the URL to the
+ * default browser and keeps this page untouched.
+ */
+export function openInBrowser(href: string): void {
+  window.open(href, '_blank', 'noopener,noreferrer')
+}
+
+/** One clickable link that opens in the browser instead of navigating the shell. */
+export function ExternalLink({
+  href,
+  children,
+  className,
+  title,
+}: {
+  href: string
+  children?: ReactNode
+  className?: string
+  title?: string
+}): ReactNode {
+  return createElement(
+    'a',
+    {
+      href,
+      className: ['alo-link', className].filter((part): part is string => part !== undefined && part !== '').join(' '),
+      title: title ?? href,
+      rel: 'noreferrer noopener',
+      target: '_blank',
+      onClick: (event: MouseEvent<HTMLAnchorElement>) => {
+        // Let modifier-clicks keep their native meaning, and never navigate the shell.
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+        event.preventDefault()
+        openInBrowser(href)
+      },
+    },
+    children ?? href,
+  )
+}
+
+/**
+ * Text where any URL inside it is clickable.
+ *
+ * Cards quote agents verbatim, and those quotes regularly carry a console URL
+ * ("选品台：http://…") that the owner is meant to open. Everything is rendered
+ * as text; only the URLs become links, so nothing an agent wrote can inject
+ * markup.
+ */
+export function RichText({ text, style }: { text: string; style?: Record<string, string | number> }): ReactNode {
+  const pieces = splitLinks(text)
+  return createElement(
+    'div',
+    { className: 'alo-richtext', style },
+    ...pieces.map((piece, index) =>
+      piece.kind === 'link' && piece.href !== undefined
+        ? createElement(ExternalLink, { key: index, href: piece.href }, piece.value)
+        : createElement('span', { key: index }, piece.value),
+    ),
   )
 }
 
