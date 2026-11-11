@@ -39,7 +39,7 @@ GitHub 的 `traffic/views`、`traffic/clones`、`traffic/popular/*` **只保留�
 ```bash
 GH_TOKEN=$(gh auth token) node scripts/collect-traffic.mjs
 # 只跑指定仓库
-GH_TOKEN=$(gh auth token) REPOS=dsh-autoloop,ai-hardware-radar node scripts/collect-traffic.mjs
+GH_TOKEN=$(gh auth token) REPOS=dsh-autoloop,relationship-compass node scripts/collect-traffic.mjs
 ```
 
 ## 口径说明
