@@ -1,0 +1,65 @@
+{
+  "generatedAt": "2026-11-11T08:16:25.105Z",
+  "login": "Minggnim-jpg",
+  "repos": [
+    {
+      "repo": "nanobot-task-pipeline",
+      "stars": 14,
+      "forks": 0,
+      "views14d": 3,
+      "viewsUniques14d": 3,
+      "clones14d": 8,
+      "cloneUniques14d": 7,
+      "downloads": 0,
+      "daysArchived": "14v/14c",
+      "totalViews": 3,
+      "totalClones": 8
+    },
+    {
+      "repo": "dsh-autoloop",
+      "stars": 0,
+      "forks": 0,
+      "views14d": 7,
+      "viewsUniques14d": 1,
+      "clones14d": 58,
+      "cloneUniques14d": 40,
+      "downloads": 0,
+      "daysArchived": "14v/14c",
+      "totalViews": 7,
+      "totalClones": 58
+    },
+    {
+      "repo": "relationship-compass",
+      "stars": 0,
+      "forks": 0,
+      "views14d": 0,
+      "viewsUniques14d": 0,
+      "clones14d": 26,
+      "cloneUniques14d": 6,
+      "downloads": 0,
+      "daysArchived": "14v/14c",
+      "totalViews": 0,
+      "totalClones": 26
+    },
+    {
+      "repo": "2025-10-23",
+      "stars": 0,
+      "forks": 0,
+      "views14d": 2,
+      "viewsUniques14d": 2,
+      "clones14d": 4,
+      "cloneUniques14d": 3,
+      "downloads": 0,
+      "daysArchived": "14v/14c",
+      "totalViews": 2,
+      "totalClones": 4
+    }
+  ],
+  "totals": {
+    "stars": 14,
+    "forks": 0,
+    "views14d": 12,
+    "clones14d": 96,
+    "downloads": 0
+  }
+}
